@@ -52,6 +52,16 @@ class CappucinoCoffeeList {
         coffeeImage: "images/coffee1.jpg",
         coffeePrice: "150",
         coffeesubText: "Latesso"),
+    Coffee(
+        coffeeName: "Cappucino",
+        coffeeImage: "images/coffee3.jpg",
+        coffeePrice: "300",
+        coffeesubText: "Latesso"),
+    Coffee(
+        coffeeName: "Cappucino",
+        coffeeImage: "images/coffee4.jpg",
+        coffeePrice: "300",
+        coffeesubText: "Latesso"),
   ];
   static List<Coffee> get cappucinocoffeelist {
     return _cappucinocoffeelist;
@@ -63,6 +73,16 @@ class AmericanoCoffeeList {
     Coffee(
         coffeeName: "Americano",
         coffeeImage: "images/coffee4.jpg",
+        coffeePrice: "350",
+        coffeesubText: "Latesso"),
+    Coffee(
+        coffeeName: "Americano",
+        coffeeImage: "images/coffee1.jpg",
+        coffeePrice: "350",
+        coffeesubText: "Latesso"),
+    Coffee(
+        coffeeName: "Americano",
+        coffeeImage: "images/coffee5.jpg",
         coffeePrice: "350",
         coffeesubText: "Latesso"),
   ];
