@@ -175,7 +175,7 @@ class _HomeScreenState extends State<HomeScreen>
   SmoothPageIndicator _buildSmoothPageIndicator() {
     return SmoothPageIndicator(
       controller: _pageController,
-      count: listOfCategories.length,
+      count: listOfCategories[_categoryIndex].contents.length,
       effect: ExpandingDotsEffect(
         dotHeight: 7.0,
         dotWidth: 8.5,
@@ -194,7 +194,7 @@ class _HomeScreenState extends State<HomeScreen>
 
       child: PageView.builder(
           controller: _pageController,
-          itemCount: coffeeList.length,
+          itemCount: listOfCategories[_categoryIndex].contents.length,
 //          onPageChanged: (index) {
 //            setState(() {
 //              _currentIndex = index;
