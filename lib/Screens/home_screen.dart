@@ -2,10 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterapp/Screens/detail_screen.dart';
 import 'package:flutterapp/coffee_card.dart';
-import 'package:flutterapp/coffee_model.dart';
+//import 'package:flutterapp/coffee_model.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-
-
+import 'package:flutterapp/category_model.dart';
+import 'dart:convert';
+import 'package:flutter/services.dart';
+import 'dart:async' show Future;
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -14,104 +16,43 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen>
     with SingleTickerProviderStateMixin {
-  int _currentIndex = 0;
+
   int _categoryIndex = 0;
-  List<Coffee> coffeeList1 = List<Coffee>();
-  List<Coffee> coffeeList2 = List<Coffee>();
-  Category category1;
-  Category category2;
-  List<Category> categoryList = List<Category>();
+
 
   final _pageController =
       PageController(viewportFraction: 0.75, initialPage: 0);
 
+  Future<String> _loadFromAssets() async {
+    return await rootBundle.loadString("assets/data.json");
+  }
 
+  Future parseJson() async {
+    List<Category> _list = [];
+    String jsonString = await _loadFromAssets();
+    final jsonResponse = jsonDecode(jsonString);
+    for (var i = 0; i < jsonResponse["categories"].length; i++) {
+      _list.add(Category.fromJson(jsonResponse["categories"][i]));
+    }
+    setState(() {
+      listOfCategories = _list;
+    });
+
+    print(jsonResponse);
+  }
+
+  List<Category> listOfCategories = [];
 
   @override
   void initState() {
-    this.coffeeList1.add(
-          Coffee(
-              coffeeName: "Cappuccino",
-              coffeeImage: "images/coffee1.jpg",
-              coffeePrice: "150",
-              coffeesubText: "Latesso"),
-        );
-    this.coffeeList1.add(
-          Coffee(
-              coffeeName: "Cappuccino",
-              coffeeImage: "images/coffee2.jpg",
-              coffeePrice: "300",
-              coffeesubText: "Latesso"),
-        );
-    this.coffeeList1.add(
-          Coffee(
-              coffeeName: "Cappuccino",
-              coffeeImage: "images/coffee3.jpg",
-              coffeePrice: "450",
-              coffeesubText: "Latesso"),
-        );
-    this.coffeeList1.add(
-          Coffee(
-              coffeeName: "Cappuccino",
-              coffeeImage: "images/coffee4.jpg",
-              coffeePrice: "400",
-              coffeesubText: "Latesso"),
-        );
-    this.coffeeList1.add(
-          Coffee(
-              coffeeName: "Cappuccino",
-              coffeeImage: "images/coffee5.jpg",
-              coffeePrice: "100",
-              coffeesubText: "Latesso"),
-        );
-    this.coffeeList2.add(
-          Coffee(
-              coffeeName: "Americano",
-              coffeeImage: "images/coffee4.jpg",
-              coffeePrice: "350",
-              coffeesubText: "Latesso"),
-        );
-    this.coffeeList2.add(
-          Coffee(
-              coffeeName: "Americano",
-              coffeeImage: "images/coffee5.jpg",
-              coffeePrice: "550",
-              coffeesubText: "Latesso"),
-        );
-    this.coffeeList2.add(
-          Coffee(
-              coffeeName: "Americano",
-              coffeeImage: "images/coffee1.jpg",
-              coffeePrice: "500",
-              coffeesubText: "Latesso"),
-        );
-    this.coffeeList2.add(
-          Coffee(
-              coffeeName: "Americano",
-              coffeeImage: "images/coffee4.jpg",
-              coffeePrice: "550",
-              coffeesubText: "Latesso"),
-        );
-    this.coffeeList2.add(
-          Coffee(
-              coffeeName: "Americano",
-              coffeeImage: "images/coffee2.jpg",
-              coffeePrice: "350",
-              coffeesubText: "Latesso"),
-        );
-
-    this.category1 = Category('Cappucino', this.coffeeList1);
-    this.category2 = Category('Americano', this.coffeeList2);
-
-    this.categoryList.add(this.category1);
-    this.categoryList.add(this.category2);
-
     super.initState();
+    parseJson();
   }
+
+
 
   @override
   Widget build(BuildContext context) {
-    List<Coffee> coffeeList = categoryList[_categoryIndex].coffeeList;
     return Scaffold(
       backgroundColor: Color.fromRGBO(237, 231, 231, 1),
       body: SafeArea(
@@ -151,7 +92,7 @@ class _HomeScreenState extends State<HomeScreen>
                 height: 20,
               ),
               Center(
-                child: _buildPageView(coffeeList),
+                child: _buildPageView(listOfCategories),
               ),
               SizedBox(
                 height: 9,
@@ -196,7 +137,7 @@ class _HomeScreenState extends State<HomeScreen>
                 height: 60,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: categoryList.length,
+                  itemCount: listOfCategories.length,
                   itemBuilder: (context, index) {
                     return InkWell(
                       onTap: () {
@@ -208,7 +149,7 @@ class _HomeScreenState extends State<HomeScreen>
                       child: Padding(
                         padding: EdgeInsets.all(16.0),
                         child: Text(
-                          categoryList[index].title,
+                          listOfCategories[index].name,
                           style: TextStyle(
                             fontWeight: _categoryIndex == index
                                 ? FontWeight.bold
@@ -234,7 +175,7 @@ class _HomeScreenState extends State<HomeScreen>
   SmoothPageIndicator _buildSmoothPageIndicator() {
     return SmoothPageIndicator(
       controller: _pageController,
-      count: CoffeeList.coffeeList.length,
+      count: listOfCategories.length,
       effect: ExpandingDotsEffect(
         dotHeight: 7.0,
         dotWidth: 8.5,
@@ -245,7 +186,7 @@ class _HomeScreenState extends State<HomeScreen>
     );
   }
 
-  Container _buildPageView(List<Coffee> coffeeList) {
+  Container _buildPageView(List<Category> coffeeList) {
     return Container(
       // margin: EdgeInsets.only(right:10),
       height: 350,
@@ -254,16 +195,17 @@ class _HomeScreenState extends State<HomeScreen>
       child: PageView.builder(
           controller: _pageController,
           itemCount: coffeeList.length,
-          onPageChanged: (index) {
-            setState(() {
-              _currentIndex = index;
-            });
-          },
+//          onPageChanged: (index) {
+//            setState(() {
+//              _currentIndex = index;
+//            });
+//          },
           itemBuilder: (context, index) {
-            Coffee coffee = coffeeList[index];
-            var name = coffee.coffeeName;
-            var image = coffee.coffeeImage;
-            var price = coffee.coffeePrice;
+         //   Contents coffee = Contents[index];
+            var name = listOfCategories[_categoryIndex].contents[index].name;
+            var image = listOfCategories[_categoryIndex].contents[index].image;
+            var price = listOfCategories[_categoryIndex].contents[index].price;
+            var subText = listOfCategories[_categoryIndex].contents[index].subText;
             return GestureDetector(
               onTap: () {
                 Navigator.push(
@@ -272,7 +214,7 @@ class _HomeScreenState extends State<HomeScreen>
                     return DetailScreen(
                       coffeeName: name,
                       coffeeImage: image,
-                      coffeePrice: price,
+                      coffeePrice: price.toString(),
                     );
                   }),
                 );
@@ -281,7 +223,7 @@ class _HomeScreenState extends State<HomeScreen>
                   coffeeName: name,
                   coffeeImage: image,
                   coffeePrice: price,
-                  coffeeSubtext: coffee.coffeesubText),
+                  coffeeSubtext: subText),
             );
           }),
     );
