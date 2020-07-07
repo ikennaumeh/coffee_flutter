@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutterapp/Screens/payscreen.dart';
 
 class DetailScreen extends StatefulWidget {
   // final String title;
@@ -29,6 +30,7 @@ class _DetailScreenState extends State<DetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
         appBar: AppBar(
           elevation: 0,
@@ -291,7 +293,11 @@ class _DetailScreenState extends State<DetailScreen> {
                     _getEstimate(totalPrice, numOfCups),
                     Expanded(
                       child: FlatButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(context, PaymentScreen.routeName,
+                          arguments: ScreenArguments(price: price,),
+                          );
+                        },
                         child: Text(
                           "Check Out",
                           style: TextStyle(color: Colors.black87),
@@ -333,3 +339,4 @@ class _DetailScreenState extends State<DetailScreen> {
     );
   }
 }
+

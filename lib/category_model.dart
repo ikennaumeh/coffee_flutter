@@ -2,7 +2,7 @@ class Category {
   String name;
   List<Contents> contents;
 
-  Category.fromJson(Map json) {
+   Category.fromJson(Map json) {
     List _list = <Contents>[];
     json['contents'].forEach((item) {
       _list.add(Contents.fromJson(item));
