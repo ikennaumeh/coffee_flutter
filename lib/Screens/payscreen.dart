@@ -33,7 +33,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                       color: Colors.black54,
                       iconSize: 40.0,
                       onPressed: (){
-
+                        Navigator.pop(context);
                       }),
                   SizedBox(
                     width: 70.0,
@@ -140,6 +140,9 @@ class _PaymentScreenState extends State<PaymentScreen> {
                     decoration: InputDecoration(
                       filled: true,
                       fillColor: Colors.white,
+                      prefixIcon: Image.asset('images/mastercard.png',height: 15.0,width: 15.0,),
+
+
                       hintStyle: TextStyle(
                         color: Colors.grey,
                       ),
@@ -266,7 +269,9 @@ class _PaymentScreenState extends State<PaymentScreen> {
                     style: kHeaderStyles,
                   ),
                   Switch(value: isSwitched, onChanged: (value){
-
+                    setState(() {
+                      isSwitched = value;
+                    });
                   },
                     activeTrackColor: Color(0xFFB388FF),
                     activeColor: Color(0xFF5C6BC0),),
