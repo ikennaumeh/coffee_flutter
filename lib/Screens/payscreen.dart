@@ -134,10 +134,13 @@ class _PaymentScreenState extends State<PaymentScreen> {
               Container(
                 child: Padding(padding: EdgeInsets.only(left: 15.0, top: 0, right: 15.0),
                   child: TextField(
+                    keyboardType: TextInputType.number,
                     style: TextStyle(
                       color: Colors.black,
                     ),
+
                     decoration: InputDecoration(
+
                       filled: true,
                       fillColor: Colors.white,
                       prefixIcon: Image.asset('images/mastercard.png',height: 15.0,width: 15.0,),
@@ -171,7 +174,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                           SizedBox(height: 5.0,),
                           TextField(
 
-
+                            keyboardType: TextInputType.number,
                             style: TextStyle(
                               color: Colors.black,
                             ),
@@ -204,7 +207,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                           Text('CCV', style: kHeaderStyles,),
                           SizedBox(height: 5.0,),
                           TextField(
-
+                            keyboardType: TextInputType.number,
                             style: TextStyle(
                               color: Colors.black,
                             ),
