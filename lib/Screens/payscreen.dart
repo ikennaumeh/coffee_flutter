@@ -16,7 +16,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
   Widget build(BuildContext context) {
     final ScreenArguments args = ModalRoute.of(context).settings.arguments;
     return Scaffold(
-      backgroundColor: Color(0xFFe8eaf6),
+      backgroundColor: Color.fromRGBO(237, 231, 231, 1),
 
       body: SafeArea(
         child: SingleChildScrollView(
@@ -56,7 +56,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   '$_currency'+args.price.toString(),
                   style: TextStyle(
                     fontSize: 40.0,
-                    color: Color(0xFF5C6BC0),
+                    color: Color(0xFF6d4c41),
                     fontWeight: FontWeight.w500,
                   ),),),
               SizedBox(
@@ -111,7 +111,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                         size: 30.0,),
                                     ],
                                   ),
-                                  color: _listIndex == index ? Color(0xFF5C6BC0): Color(0xFFBBDEFB),
+                                  color: _listIndex == index ? Color(0xFF6d4c41): Color(0xFFd7ccc8),
 
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10.0),
@@ -276,8 +276,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
                       isSwitched = value;
                     });
                   },
-                    activeTrackColor: Color(0xFFB388FF),
-                    activeColor: Color(0xFF5C6BC0),),
+                    activeTrackColor: Color(0xFFd7ccc8),
+                    activeColor: Color(0xFF6d4c41),),
                 ],
               ),
               Center(
@@ -300,7 +300,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                         ),
                       ),
                     ),
-                    color: Color(0xFF5C6BC0),
+                    color: Color(0xFF6d4c41),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(50.0),
                     ),
