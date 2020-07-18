@@ -99,8 +99,7 @@ color: Colors.black87,
                                 duration: Duration(milliseconds: 200),
                                 margin: EdgeInsets.only(top:3.0),
                                 padding: EdgeInsets.all(10.0),
-
-                                height:  100.0,//heights['$index'],
+                                height:  100.0,//heights['$index'],// this height here isnt doing anything, dunno why
                                 width: 133.0,
                                 child: RaisedButton(
                                   onPressed: (){
