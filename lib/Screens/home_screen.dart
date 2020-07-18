@@ -18,8 +18,12 @@ class _HomeScreenState extends State<HomeScreen>
 
   int _categoryIndex = 0;
 
+ static int _pageIndex = 0;
+
+  double _pageHeight = 350.0;
+
   final _pageController =
-      PageController(viewportFraction: 0.75, initialPage: 0);
+      PageController(viewportFraction: 0.75, initialPage: _pageIndex);
 
   Future<String> _loadFromAssets() async {
     return await rootBundle.loadString("assets/data.json");
@@ -187,16 +191,32 @@ class _HomeScreenState extends State<HomeScreen>
 
   Container _buildPageView(List<Category> coffeeList) {
     return Container(
-      height: 350,
+      height: _pageHeight,
       child: PageView.builder(
           controller: _pageController,
           itemCount: listOfCategories[_categoryIndex].contents.length,
+          onPageChanged: (index){
+            setState(() {
+              _pageIndex = index;
+            });
+          },
           itemBuilder: (context, index) {
             var name = listOfCategories[_categoryIndex].contents[index].name;
             var image = listOfCategories[_categoryIndex].contents[index].image;
             var price = listOfCategories[_categoryIndex].contents[index].price;
             var subText = listOfCategories[_categoryIndex].contents[index].subText;
             return GestureDetector(
+              child: AnimatedContainer(
+                duration: Duration(milliseconds: 200),
+                margin: EdgeInsets.symmetric(horizontal: _pageIndex == index ? 25 : 0),
+                curve: Curves.bounceInOut,
+                child: CoffeeCard(
+                    coffeeName: name,
+                    coffeeImage: image,
+                    coffeePrice: price,
+                    coffeeSubtext: subText),
+              ),
+
               onTap: () {
                 Navigator.push(
                   context,
@@ -209,11 +229,7 @@ class _HomeScreenState extends State<HomeScreen>
                   }),
                 );
               },
-              child: CoffeeCard(
-                  coffeeName: name,
-                  coffeeImage: image,
-                  coffeePrice: price,
-                  coffeeSubtext: subText),
+
             );
           }),
     );

@@ -73,8 +73,8 @@ class CoffeeCard extends StatelessWidget {
               ),
             ),
             Positioned(
-              bottom: containerHeight / 90,
-              right: containerWidth / 105,
+              bottom:20,
+              right: 1,
               //  left: containerWidth/90,
               //  right: containerWidth,
 
@@ -110,8 +110,9 @@ class CoffeeCard extends StatelessWidget {
                 height: 50,
                 decoration: BoxDecoration(
                   color: Color.fromRGBO(37, 34, 40, 1),
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(40),
+                  borderRadius: BorderRadius.only(
+                   topLeft: Radius.circular(30),
+                    bottomRight: Radius.circular(19),
                   ),
                 ),
               ),

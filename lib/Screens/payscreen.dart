@@ -82,59 +82,55 @@ class _PaymentScreenState extends State<PaymentScreen> {
                     padding: const EdgeInsets.only(left: 15.0),
                     child: Container(
                       width: double.infinity,
-                    height: 75.0,
-color: Colors.black87,
+                      height: 75.0,
+                      //color: Colors.black87,
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
                         itemCount: paytypeList.length,
-
+                         shrinkWrap: true,
                         itemBuilder: (context, index){
                           heights['$index'] = heights['$index'] == null ? 150.0 : heights['$index'];
-                          return InkWell(
+                          return Padding(
+                            padding: EdgeInsets.only( bottom: 8.0),
+                            child: AnimatedContainer(
+                              duration: Duration(milliseconds: 200),
+                              margin: EdgeInsets.only(top:3.0),
+                              padding: EdgeInsets.all(10.0),
+                              height:  heights['$index'],//heights['$index'],// this height here isnt doing anything, dunno why
+                              width: 133.0,
+                              child: RaisedButton(
+                                onPressed: (){
+                                  setState(() {
+                                    _listIndex = index;
+                                    heights['$index'] = 85.0;
 
-                            onTap: (){},
-                            child: Padding(
-                              padding: EdgeInsets.only( bottom: 8.0),
-                              child: AnimatedContainer(
-                                duration: Duration(milliseconds: 200),
-                                margin: EdgeInsets.only(top:3.0),
-                                padding: EdgeInsets.all(10.0),
-                                height:  100.0,//heights['$index'],// this height here isnt doing anything, dunno why
-                                width: 133.0,
-                                child: RaisedButton(
-                                  onPressed: (){
-                                    setState(() {
-                                      _listIndex = index;
-                                      heights['$index'] = 85.0;
+                                  });
+                                  Duration time = Duration(milliseconds: 400);
+                                  Future.delayed(time, (){
+                                    heights['$index'] = 75.0;
 
-                                    });
-                                    Duration time = Duration(milliseconds: 400);
-                                    Future.delayed(time, (){
-                                      heights['$index'] = 75.0;
-
-                                    });
-                                  },
-                                  child: Row(
-                                    children: <Widget>[
-                                      Text(paytypeList[index],
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 15.0,
-                                        ),),
-                                      SizedBox(width: 5.0,),
-                                      Icon(Icons.check_circle_outline,
+                                  });
+                                },
+                                child: Row(
+                                  children: <Widget>[
+                                    Text(paytypeList[index],
+                                      style: TextStyle(
                                         color: Colors.white,
-                                        size: 30.0,),
-                                    ],
-                                  ),
-                                  color: _listIndex == index ? Color(0xFF6d4c41): Color(0xFFd7ccc8),
-
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                  ),
+                                        fontSize: 15.0,
+                                      ),),
+                                    SizedBox(width: 5.0,),
+                                    Icon(Icons.check_circle_outline,
+                                      color: Colors.white,
+                                      size: 30.0,),
+                                  ],
                                 ),
-                              ),),
-                          );
+                                color: _listIndex == index ? Color(0xFF6d4c41): Color(0xFFd7ccc8),
+
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                              ),
+                            ),);
                         },
                       ),
                     ),
