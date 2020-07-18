@@ -27,7 +27,6 @@ class CoffeeCard extends StatelessWidget {
           overflow: Overflow.visible,
           children: <Widget>[
             Container(
-              // margin: EdgeInsets.only(right:15.0),
               width: 260,
               height: 330,
               decoration: BoxDecoration(

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutterapp/constants.dart';
 
 class PaymentScreen extends StatefulWidget {
-  static const routeName = '/payscreen';
+  static const routeName = '/.payscreen';
   @override
   _PaymentScreenState createState() => _PaymentScreenState();
 }
@@ -12,6 +12,11 @@ class _PaymentScreenState extends State<PaymentScreen> {
   List<String> paytypeList = ['Paypal', 'Credit', 'Wallet'];
   bool isSwitched = true;
   int _listIndex = 0;
+  double _height = 70.0;
+
+  var heights = {};
+
+
   @override
   Widget build(BuildContext context) {
     final ScreenArguments args = ModalRoute.of(context).settings.arguments;
@@ -70,32 +75,44 @@ class _PaymentScreenState extends State<PaymentScreen> {
 
               ),
 
-              //Fix the list here----------
               LayoutBuilder(
                 builder: (context, constraints){
+
                   return Padding(
                     padding: const EdgeInsets.only(left: 15.0),
                     child: Container(
                       width: double.infinity,
-                      height: 85.0,
-
+                    height: 75.0,
+color: Colors.black87,
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
                         itemCount: paytypeList.length,
+
                         itemBuilder: (context, index){
+                          heights['$index'] = heights['$index'] == null ? 150.0 : heights['$index'];
                           return InkWell(
+
                             onTap: (){},
                             child: Padding(
                               padding: EdgeInsets.only( bottom: 8.0),
-                              child: Container(
+                              child: AnimatedContainer(
+                                duration: Duration(milliseconds: 200),
                                 margin: EdgeInsets.only(top:3.0),
                                 padding: EdgeInsets.all(10.0),
-                                height: 30.0,
+
+                                height:  100.0,//heights['$index'],
                                 width: 133.0,
                                 child: RaisedButton(
                                   onPressed: (){
                                     setState(() {
                                       _listIndex = index;
+                                      heights['$index'] = 85.0;
+
+                                    });
+                                    Duration time = Duration(milliseconds: 400);
+                                    Future.delayed(time, (){
+                                      heights['$index'] = 75.0;
+
                                     });
                                   },
                                   child: Row(
@@ -281,14 +298,27 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 ],
               ),
               Center(
-                child: Container(
+                child: AnimatedContainer(
+                  duration: Duration(milliseconds: 200),
+                  curve: Curves.ease,
                   margin: EdgeInsets.only(top: 5.0),
                   padding: EdgeInsets.all(10),
-                  height: 70.0,
-                  width: double.maxFinite,
+                  height: _height,
+                  width: double.maxFinite ,
                   child: RaisedButton(
                     onPressed: (){
+                      setState(() {
+                        _height = 80;
+                      });
+                      Duration time = Duration(milliseconds: 200);
+                      Future.delayed(time, (){
+                        _height = 70;
+                        setState(() {
+
+                        });
+                      });
                      Navigator.pushNamed(context, '/');
+
                     },
 
                     child: Center(
@@ -322,3 +352,5 @@ class ScreenArguments {
   ScreenArguments({this.price});
 
 }
+
+

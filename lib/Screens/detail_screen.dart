@@ -1,5 +1,7 @@
+import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterapp/Screens/payscreen.dart';
+
 
 class DetailScreen extends StatefulWidget {
   // final String title;
@@ -15,7 +17,7 @@ class DetailScreen extends StatefulWidget {
   _DetailScreenState createState() => _DetailScreenState();
 }
 
-class _DetailScreenState extends State<DetailScreen> {
+class _DetailScreenState extends State<DetailScreen>  {
   int _selectedPosition = -1;
 
   String _coffeePrice = "0";
@@ -28,24 +30,51 @@ class _DetailScreenState extends State<DetailScreen> {
 
   static const String coffeeCup = "images/coffee_cup_size.png";
 
+  double _height = 70.0;
+  double _smallHeight = 30.0;
+  double _smallWidth = 90.0;
+
+
+
+
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
         appBar: AppBar(
           elevation: 0,
-          title: FlatButton(
-            onPressed: () {
-              _confirmOrderModalBottomSheet(
-                  totalPrice: "$_currency$price", numOfCups: "x $_cupsCounter");
-            },
-            child: Text(
-              "Buy Now",
-              style: TextStyle(color: Colors.black87),
-            ),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(18.0),
-              side: BorderSide(color: Colors.blue),
+          title: AnimatedContainer(
+            curve: Curves.easeIn,
+            duration: Duration(milliseconds: 200),
+            height: _smallHeight,
+            width: _smallWidth,
+
+            child: FlatButton(
+              onPressed: () {
+                _confirmOrderModalBottomSheet(
+                    totalPrice: "$_currency$price", numOfCups: "x $_cupsCounter");
+
+                setState(() {
+                  _smallHeight = 40.0;
+                  _smallWidth = 95.0;
+                });
+                Duration time = Duration(milliseconds: 200);
+                Future.delayed(time, (){
+                  _smallHeight = 30.0;
+                  _smallWidth = 90.0;
+                  setState(() {
+
+                  });
+                });
+              },
+              child: Text(
+                "Buy Now",
+                style: TextStyle(color: Colors.black87),
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(18.0),
+                side: BorderSide(color: Colors.blue),
+              ),
             ),
           ),
           actions: [
@@ -192,16 +221,27 @@ class _DetailScreenState extends State<DetailScreen> {
                 ],
               ),
             ),
-            Container(
+            AnimatedContainer(
+              duration: Duration(milliseconds: 150),
+              curve: Curves.bounceIn,
               margin: EdgeInsets.only(top: 30),
               padding: EdgeInsets.all(10),
               width: double.maxFinite,
-              height: 70,
+              height: _height,
+
               child: FlatButton(
                 onPressed: () {
                   setState(() {
+                    _height = 80;
                     this._cupsCounter += 1;
                     this.price += int.parse(_coffeePrice);
+                  });
+                  Duration time = Duration(milliseconds: 150);
+                  Future.delayed(time, (){
+                    _height = 70;
+                    setState(() {
+
+                    });
                   });
                 },
                 child: Center(
@@ -286,9 +326,6 @@ class _DetailScreenState extends State<DetailScreen> {
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 18),
                       ),
-                      alignment: Alignment.center,
-                      height: 35,
-                      decoration: BoxDecoration(),
                     ),
                     _getEstimate(totalPrice, numOfCups),
                     Expanded(
@@ -321,7 +358,6 @@ class _DetailScreenState extends State<DetailScreen> {
       children: [
         Image.asset(
           widget.coffeeImage,
-          // "images/cup_of_coffee.png",
           height: 70,
           width: 50,
         ),

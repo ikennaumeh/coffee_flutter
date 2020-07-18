@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterapp/Screens/detail_screen.dart';
 import 'package:flutterapp/coffee_card.dart';
-//import 'package:flutterapp/coffee_model.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:flutterapp/category_model.dart';
 import 'dart:convert';
@@ -18,7 +17,6 @@ class _HomeScreenState extends State<HomeScreen>
     with SingleTickerProviderStateMixin {
 
   int _categoryIndex = 0;
-
 
   final _pageController =
       PageController(viewportFraction: 0.75, initialPage: 0);
@@ -124,7 +122,8 @@ class _HomeScreenState extends State<HomeScreen>
                 setState(() {
                   if (_categoryIndex == 0)
                     _categoryIndex = 1;
-                  else if (_categoryIndex == 1) _categoryIndex = 0;
+                  else if (_categoryIndex == 1)
+                    _categoryIndex = 0;
                 });
               },
               iconSize: 20.0,
@@ -188,20 +187,11 @@ class _HomeScreenState extends State<HomeScreen>
 
   Container _buildPageView(List<Category> coffeeList) {
     return Container(
-      // margin: EdgeInsets.only(right:10),
       height: 350,
-      // width: MediaQuery.of(context).size.width/0.1,
-
       child: PageView.builder(
           controller: _pageController,
           itemCount: listOfCategories[_categoryIndex].contents.length,
-//          onPageChanged: (index) {
-//            setState(() {
-//              _currentIndex = index;
-//            });
-//          },
           itemBuilder: (context, index) {
-         //   Contents coffee = Contents[index];
             var name = listOfCategories[_categoryIndex].contents[index].name;
             var image = listOfCategories[_categoryIndex].contents[index].image;
             var price = listOfCategories[_categoryIndex].contents[index].price;
