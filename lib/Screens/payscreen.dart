@@ -83,7 +83,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                     child: Container(
                       width: double.infinity,
                       height: 75.0,
-                      //color: Colors.black87,
+
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
                         itemCount: paytypeList.length,

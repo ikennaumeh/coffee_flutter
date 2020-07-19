@@ -74,7 +74,7 @@ class CoffeeCard extends StatelessWidget {
             ),
             Positioned(
               bottom:20,
-              right: 1,
+              right: 9,
               //  left: containerWidth/90,
               //  right: containerWidth,
 

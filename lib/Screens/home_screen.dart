@@ -20,6 +20,8 @@ class _HomeScreenState extends State<HomeScreen>
 
  static int _pageIndex = 0;
 
+ var currentPageValue;
+
   double _pageHeight = 350.0;
 
   final _pageController =
@@ -199,38 +201,65 @@ class _HomeScreenState extends State<HomeScreen>
             setState(() {
               _pageIndex = index;
             });
+            _pageController.addListener(() {
+              setState(() {
+                currentPageValue = _pageController.page;
+              });
+            });
+
           },
           itemBuilder: (context, index) {
             var name = listOfCategories[_categoryIndex].contents[index].name;
             var image = listOfCategories[_categoryIndex].contents[index].image;
             var price = listOfCategories[_categoryIndex].contents[index].price;
             var subText = listOfCategories[_categoryIndex].contents[index].subText;
-            return GestureDetector(
-              child: AnimatedContainer(
-                duration: Duration(milliseconds: 200),
-                margin: EdgeInsets.symmetric(horizontal: _pageIndex == index ? 25 : 0),
-                curve: Curves.bounceInOut,
+            if(index == currentPageValue){
+              return GestureDetector(
                 child: CoffeeCard(
                     coffeeName: name,
                     coffeeImage: image,
                     coffeePrice: price,
-                    coffeeSubtext: subText),
+                    coffeeSubtext: subText,
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) {
+                      return DetailScreen(
+                        coffeeName: name,
+                        coffeeImage: image,
+                        coffeePrice: price.toString(),
+                      );
+                    }),
+                  );
+                },
+              );
+
+            } else {
+              return AnimatedPadding(padding: EdgeInsets.symmetric(vertical: 30.0, ), duration: Duration(milliseconds: 200),
+              child: CoffeeCard(
+                coffeeName: name,
+                coffeeImage: image,
+                coffeePrice: price,
+                coffeeSubtext: subText,
               ),
-
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) {
-                    return DetailScreen(
-                      coffeeName: name,
-                      coffeeImage: image,
-                      coffeePrice: price.toString(),
-                    );
-                  }),
-                );
-              },
-
-            );
+              );
+            }
+//            return GestureDetector(
+//              child: AnimatedContainer(
+//                duration: Duration(milliseconds: 200),
+//                margin: EdgeInsets.symmetric(horizontal: _pageIndex == index ? 25 : 0),
+//                curve: Curves.bounceInOut,
+//                child: CoffeeCard(
+//                    coffeeName: name,
+//                    coffeeImage: image,
+//                    coffeePrice: price,
+//                    coffeeSubtext: subText),
+//              ),
+//
+//
+//
+//            );
           }),
     );
   }
