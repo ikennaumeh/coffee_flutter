@@ -14,7 +14,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
   int _listIndex = 0;
   double _height = 70.0;
 
-  var heights = {};
+  double _width = 133.0;
 
 
   @override
@@ -89,25 +89,24 @@ class _PaymentScreenState extends State<PaymentScreen> {
                         itemCount: paytypeList.length,
                          shrinkWrap: true,
                         itemBuilder: (context, index){
-                          heights['$index'] = heights['$index'] == null ? 150.0 : heights['$index'];
                           return Padding(
                             padding: EdgeInsets.only( bottom: 8.0),
                             child: AnimatedContainer(
                               duration: Duration(milliseconds: 200),
                               margin: EdgeInsets.only(top:3.0),
                               padding: EdgeInsets.all(10.0),
-                              height:  heights['$index'],//heights['$index'],// this height here isnt doing anything, dunno why
-                              width: 133.0,
+                              height:  33.0,
+                              width: _width,
                               child: RaisedButton(
                                 onPressed: (){
                                   setState(() {
                                     _listIndex = index;
-                                    heights['$index'] = 85.0;
+                                    _width += 10.0;
 
                                   });
                                   Duration time = Duration(milliseconds: 400);
                                   Future.delayed(time, (){
-                                    heights['$index'] = 75.0;
+                                    _width = 133.0;
 
                                   });
                                 },
